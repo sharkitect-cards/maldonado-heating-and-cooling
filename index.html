@@ -23,15 +23,18 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         :root {
+            /* Brand colors live on the button + the QR only. The card stays clean. */
             --heat: #FF6A28;
             --heat-rgb: 255, 106, 40;
             --cool: #3B9EFF;
             --cool-rgb: 59, 158, 255;
+            --split: linear-gradient(100deg, var(--heat) 0%, #9E6FB4 52%, var(--cool) 100%);
+
             --bg: #1A1A1A;
             --text-primary: #FFFFFF;
             --text-secondary: #C7CCD4;
             --text-muted: #808285;
-            --split: linear-gradient(90deg, var(--heat) 0%, #A87AA0 50%, var(--cool) 100%);
+            --hairline: rgba(255, 255, 255, 0.10);
         }
 
         body {
@@ -47,14 +50,13 @@
             overflow-x: hidden;
         }
 
-        /* Faint grid, warm on the left half, cool on the right */
         body::before {
             content: '';
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
             background-image:
-                linear-gradient(rgba(var(--heat-rgb), 0.025) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(var(--cool-rgb), 0.025) 1px, transparent 1px);
+                linear-gradient(rgba(255, 255, 255, 0.018) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.018) 1px, transparent 1px);
             background-size: 40px 40px;
             pointer-events: none;
             z-index: 0;
@@ -65,28 +67,24 @@
             z-index: 1;
             max-width: 420px;
             width: 100%;
-            background: linear-gradient(180deg, #222222 0%, var(--bg) 100%);
-            border: 1px solid rgba(255, 255, 255, 0.07);
+            background: linear-gradient(180deg, #232323 0%, var(--bg) 100%);
+            border: 1px solid var(--hairline);
             border-radius: 16px;
             padding: 40px 32px;
             text-align: center;
-            box-shadow:
-                0 0 50px rgba(var(--heat-rgb), 0.05),
-                0 0 50px rgba(var(--cool-rgb), 0.05),
-                0 20px 60px rgba(0, 0, 0, 0.45);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
         }
 
-        /* Fire-to-ice hairline across the top edge */
+        /* One restrained brand cue on the top edge */
         .card::before {
             content: '';
             position: absolute;
             top: 0; left: 50%;
             transform: translateX(-50%);
-            width: 62%;
+            width: 58%;
             height: 2px;
             background: var(--split);
             border-radius: 2px;
-            opacity: 0.9;
         }
 
         .logo {
@@ -111,18 +109,34 @@
 
         .company {
             font-weight: 500;
-            font-size: 13px;
+            font-size: 12px;
             color: var(--text-secondary);
-            letter-spacing: 0.4px;
-            margin-bottom: 16px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 18px;
         }
 
+        /* Hairline rule with a small brand diamond at center */
         .divider {
-            width: 90px;
-            height: 1.5px;
-            background: var(--split);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
             margin: 0 auto 18px;
-            border-radius: 2px;
+            width: 190px;
+        }
+        .divider::before, .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--hairline);
+        }
+        .diamond {
+            width: 7px;
+            height: 7px;
+            transform: rotate(45deg);
+            background: var(--split);
+            border-radius: 1px;
         }
 
         .tagline {
@@ -131,12 +145,8 @@
             font-size: 12px;
             letter-spacing: 2.5px;
             text-transform: uppercase;
+            color: var(--text-primary);
             margin-bottom: 14px;
-            background: var(--split);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            color: var(--heat); /* fallback where background-clip:text is unsupported */
         }
 
         .bio {
@@ -157,11 +167,14 @@
             margin-bottom: 22px;
         }
 
+        /* Neutral rows - clean, no per-row color */
         .contact-link {
             display: flex;
             align-items: center;
             gap: 12px;
-            padding: 11px 16px;
+            padding: 12px 16px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--hairline);
             border-radius: 8px;
             color: var(--text-primary);
             text-decoration: none;
@@ -170,36 +183,15 @@
             transition: all 0.2s ease;
         }
 
-        .contact-link svg { width: 18px; height: 18px; flex-shrink: 0; }
+        .contact-link:hover {
+            background: rgba(255, 255, 255, 0.07);
+            border-color: rgba(255, 255, 255, 0.22);
+        }
+
+        .contact-link svg { width: 18px; height: 18px; flex-shrink: 0; fill: var(--text-secondary); }
         .contact-link span { color: var(--text-secondary); }
 
-        /* Phone runs warm, email runs cool - the split carried into the rows */
-        .contact-link.heat {
-            background: rgba(var(--heat-rgb), 0.07);
-            border: 1px solid rgba(var(--heat-rgb), 0.16);
-        }
-        .contact-link.heat svg { fill: var(--heat); }
-        .contact-link.heat:hover {
-            background: rgba(var(--heat-rgb), 0.14);
-            border-color: rgba(var(--heat-rgb), 0.32);
-        }
-
-        .contact-link.cool {
-            background: rgba(var(--cool-rgb), 0.07);
-            border: 1px solid rgba(var(--cool-rgb), 0.16);
-        }
-        .contact-link.cool svg { fill: var(--cool); }
-        .contact-link.cool:hover {
-            background: rgba(var(--cool-rgb), 0.14);
-            border-color: rgba(var(--cool-rgb), 0.32);
-        }
-
-        .social {
-            display: flex;
-            justify-content: center;
-            gap: 12px;
-            margin-bottom: 24px;
-        }
+        .social { display: flex; justify-content: center; gap: 12px; margin-bottom: 24px; }
 
         .social a {
             display: flex;
@@ -208,73 +200,51 @@
             width: 46px;
             height: 46px;
             border-radius: 12px;
-            background: rgba(var(--cool-rgb), 0.07);
-            border: 1px solid rgba(var(--cool-rgb), 0.14);
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--hairline);
             transition: all 0.2s ease;
         }
 
-        .social a:hover {
-            background: rgba(var(--cool-rgb), 0.16);
-            transform: translateY(-2px);
-        }
-
+        .social a:hover { background: rgba(255, 255, 255, 0.08); transform: translateY(-2px); }
         .social svg { width: 21px; height: 21px; fill: var(--text-secondary); }
-        .social a:hover svg { fill: var(--cool); }
+        .social a:hover svg { fill: var(--text-primary); }
 
-        .btn-row { display: flex; gap: 10px; margin-bottom: 22px; }
-
-        .save-btn, .qr-btn {
+        /* SINGLE action: show the QR. No direct .vcf link - standing card standard. */
+        .save-btn {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            padding: 14px 24px;
-            border: none;
-            border-radius: 8px;
-            font-family: 'Montserrat', sans-serif;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            letter-spacing: 0.5px;
             justify-content: center;
-        }
-
-        .save-btn {
-            flex: 1;
+            gap: 10px;
+            width: 100%;
+            padding: 16px 24px;
+            border: none;
+            border-radius: 10px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 15px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            cursor: pointer;
             background: var(--split);
             color: #FFFFFF;
-            text-decoration: none;
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+            transition: all 0.2s ease;
+            margin-bottom: 22px;
         }
 
         .save-btn:hover {
-            filter: brightness(1.1);
+            filter: brightness(1.08);
             transform: translateY(-1px);
-            box-shadow: 0 4px 22px rgba(var(--heat-rgb), 0.22), 0 4px 22px rgba(var(--cool-rgb), 0.22);
+            box-shadow: 0 6px 24px rgba(var(--heat-rgb), 0.20), 0 6px 24px rgba(var(--cool-rgb), 0.20);
         }
 
-        .qr-btn {
-            background: rgba(255, 255, 255, 0.06);
-            color: var(--text-secondary);
-            border: 1px solid rgba(255, 255, 255, 0.14);
-            padding: 14px 18px;
-        }
-
-        .qr-btn:hover {
-            background: rgba(255, 255, 255, 0.12);
-            color: #FFFFFF;
-            transform: translateY(-1px);
-        }
-
-        .save-btn:active, .qr-btn:active { transform: translateY(0); }
-        .save-btn svg { width: 18px; height: 18px; fill: #FFFFFF; }
-        .qr-btn svg { width: 18px; height: 18px; fill: currentColor; }
+        .save-btn:active { transform: translateY(0); }
+        .save-btn svg { width: 19px; height: 19px; fill: #FFFFFF; }
 
         .qr-overlay {
             display: none;
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0, 0, 0, 0.88);
+            background: rgba(0, 0, 0, 0.9);
             z-index: 100;
             align-items: center;
             justify-content: center;
@@ -284,34 +254,39 @@
         .qr-overlay.active { display: flex; }
 
         .qr-modal {
-            background: var(--bg);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            border-radius: 16px;
-            padding: 32px;
+            background: #202020;
+            border: 1px solid var(--hairline);
+            border-radius: 18px;
+            padding: 28px;
             text-align: center;
-            max-width: 320px;
+            max-width: 340px;
             width: 100%;
         }
 
         .qr-modal h3 {
             font-family: 'Orbitron', sans-serif;
             font-size: 13px;
-            letter-spacing: 1.5px;
-            margin-bottom: 8px;
-            background: var(--split);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            color: var(--heat);
+            letter-spacing: 2px;
+            margin-bottom: 6px;
+            color: var(--text-primary);
         }
 
-        .qr-modal p { font-size: 12px; color: var(--text-muted); margin-bottom: 20px; }
+        .qr-modal p { font-size: 12px; color: var(--text-muted); margin-bottom: 18px; }
+
+        .qr-frame {
+            background: #FFFFFF;
+            border-radius: 14px;
+            padding: 10px;
+            margin: 0 auto 18px;
+            width: 250px;
+        }
+        .qr-frame img { width: 100%; height: auto; display: block; }
 
         .qr-close {
             background: none;
-            border: 1px solid rgba(255, 255, 255, 0.16);
+            border: 1px solid rgba(255, 255, 255, 0.18);
             color: var(--text-secondary);
-            padding: 10px 24px;
+            padding: 10px 26px;
             border-radius: 8px;
             font-family: 'Montserrat', sans-serif;
             font-size: 13px;
@@ -319,16 +294,15 @@
             transition: all 0.2s ease;
         }
 
-        .qr-close:hover { border-color: var(--cool); color: #FFFFFF; }
+        .qr-close:hover { border-color: rgba(255, 255, 255, 0.4); color: var(--text-primary); }
 
         .footer { font-size: 11px; color: var(--text-muted); }
-        .footer a { color: var(--cool); text-decoration: none; }
+        .footer a { color: var(--text-secondary); text-decoration: none; }
 
         @media (max-width: 480px) {
             .card { padding: 32px 24px; }
             .name { font-size: 18px; letter-spacing: 1px; }
             .tagline { font-size: 11px; letter-spacing: 2px; }
-            .btn-row { flex-direction: column; }
         }
     </style>
 </head>
@@ -341,7 +315,7 @@
         <div class="name">Carlos Maldonado</div>
         <div class="company">Maldonado Heating &amp; Cooling</div>
 
-        <div class="divider"></div>
+        <div class="divider"><span class="diamond"></span></div>
 
         <div class="tagline">Two Seasons. One Standard.</div>
 
@@ -351,11 +325,11 @@
         </div>
 
         <div class="contact-links">
-            <a href="tel:+19139635392" class="contact-link heat">
+            <a href="tel:+19139635392" class="contact-link">
                 <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
                 <span>(913) 963-5392</span>
             </a>
-            <a href="mailto:maldonadolarios1987@gmail.com" class="contact-link cool">
+            <a href="mailto:maldonadolarios1987@gmail.com" class="contact-link">
                 <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
                 <span>maldonadolarios1987@gmail.com</span>
             </a>
@@ -367,26 +341,21 @@
             </a>
         </div>
 
-        <div class="btn-row">
-            <a class="save-btn" href="contact.vcf">
-                <svg viewBox="0 0 24 24"><path d="M19 12v7H5v-7H3v7c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-7h-2zm-6 .67l2.59-2.58L17 11.5l-5 5-5-5 1.41-1.41L11 12.67V3h2v9.67z"/></svg>
-                Save Contact
-            </a>
-            <button class="qr-btn" onclick="toggleQR()">
-                <svg viewBox="0 0 24 24"><path d="M3 11h8V3H3v8zm2-6h4v4H5V5zm8-2v8h8V3h-8zm6 6h-4V5h4v4zM3 21h8v-8H3v8zm2-6h4v4H5v-4zm13-2h-2v3h-3v2h3v3h2v-3h3v-2h-3v-3zm-3 8v-2h-2v2h2zm4 0v-2h-2v2h2z"/></svg>
-                QR
-            </button>
-        </div>
+        <button class="save-btn" onclick="toggleQR()">
+            <svg viewBox="0 0 24 24"><path d="M3 11h8V3H3v8zm2-6h4v4H5V5zm8-2v8h8V3h-8zm6 6h-4V5h4v4zM3 21h8v-8H3v8zm2-6h4v4H5v-4zm13-2h-2v3h-3v2h3v3h2v-3h3v-2h-3v-3zm-3 8v-2h-2v2h2zm4 0v-2h-2v2h2z"/></svg>
+            Save My Contact
+        </button>
 
         <div class="footer">Powered by <a href="https://www.sharkitectdigital.com" target="_blank" rel="noopener">Sharkitect</a></div>
     </div>
 
-    <!-- QR Code Overlay -->
     <div class="qr-overlay" id="qrOverlay" onclick="toggleQR()">
         <div class="qr-modal" onclick="event.stopPropagation()">
             <h3>SCAN TO SAVE</h3>
             <p>Point your camera at the code</p>
-            <img src="qr-code.svg" alt="QR code to save Carlos Maldonado's contact" style="width:220px;height:220px;display:block;margin:0 auto 20px;border-radius:8px;"/>
+            <div class="qr-frame">
+                <img src="qr-code.png" alt="Scan to save Carlos Maldonado's contact">
+            </div>
             <button class="qr-close" onclick="toggleQR()">Close</button>
         </div>
     </div>
