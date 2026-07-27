@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>{{PERSON_FULL_NAME}} | {{COMPANY_NAME}}</title>
-    <meta name="description" content="{{PERSON_FULL_NAME}} - {{PERSON_TITLE}}, {{COMPANY_NAME}}. ">
+    <title>Carlos Maldonado &mdash; Maldonado Heating &amp; Cooling</title>
+    <meta name="description" content="Carlos Maldonado, Maldonado Heating &amp; Cooling. Heating, Cooling, Installation &amp; Repair - Kansas City Metro.">
 
     <!-- PWA / Home Screen support -->
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -13,22 +13,25 @@
     <link rel="manifest" href="manifest.json">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="theme-color" content="#1A1A1A">
-    <link rel="apple-touch-icon" href="logo.svg">
-    <link rel="icon" href="logo.svg">
+    <link rel="apple-touch-icon" href="logo.jpg">
+    <link rel="icon" href="logo.jpg">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         :root {
-            --accent: {{COMPANY_ACCENT_COLOR}};
-            --accent-rgb: {{COMPANY_ACCENT_RGB}};
+            --heat: #FF6A28;
+            --heat-rgb: 255, 106, 40;
+            --cool: #3B9EFF;
+            --cool-rgb: 59, 158, 255;
             --bg: #1A1A1A;
             --text-primary: #FFFFFF;
             --text-secondary: #C7CCD4;
             --text-muted: #808285;
+            --split: linear-gradient(90deg, var(--heat) 0%, #A87AA0 50%, var(--cool) 100%);
         }
 
         body {
@@ -44,14 +47,14 @@
             overflow-x: hidden;
         }
 
-        /* Subtle grid background — adjust opacity/size per brand */
+        /* Faint grid, warm on the left half, cool on the right */
         body::before {
             content: '';
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
             background-image:
-                linear-gradient(rgba(var(--accent-rgb), 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(var(--accent-rgb), 0.03) 1px, transparent 1px);
+                linear-gradient(rgba(var(--heat-rgb), 0.025) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(var(--cool-rgb), 0.025) 1px, transparent 1px);
             background-size: 40px 40px;
             pointer-events: none;
             z-index: 0;
@@ -63,104 +66,102 @@
             max-width: 420px;
             width: 100%;
             background: linear-gradient(180deg, #222222 0%, var(--bg) 100%);
-            border: 1px solid rgba(var(--accent-rgb), 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.07);
             border-radius: 16px;
             padding: 40px 32px;
             text-align: center;
             box-shadow:
-                0 0 40px rgba(var(--accent-rgb), 0.06),
-                0 20px 60px rgba(0, 0, 0, 0.4);
+                0 0 50px rgba(var(--heat-rgb), 0.05),
+                0 0 50px rgba(var(--cool-rgb), 0.05),
+                0 20px 60px rgba(0, 0, 0, 0.45);
         }
 
-        /* Top accent line */
+        /* Fire-to-ice hairline across the top edge */
         .card::before {
             content: '';
             position: absolute;
             top: 0; left: 50%;
             transform: translateX(-50%);
-            width: 60%;
+            width: 62%;
             height: 2px;
-            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+            background: var(--split);
             border-radius: 2px;
+            opacity: 0.9;
         }
 
         .logo {
-            width: 120px;
-            height: 120px;
-            margin: 0 auto 24px;
-            border-radius: 12px;
+            width: 140px;
+            height: 140px;
+            margin: 0 auto 22px;
+            border-radius: 14px;
             overflow: hidden;
         }
 
-        .logo img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
+        .logo img { width: 100%; height: 100%; object-fit: contain; }
 
         .name {
             font-family: 'Orbitron', sans-serif;
             font-weight: 700;
-            font-size: 22px;
+            font-size: 21px;
             color: var(--text-primary);
-            letter-spacing: 1px;
-            margin-bottom: 6px;
-        }
-
-        .title {
-            font-weight: 400;
-            font-size: 14px;
-            color: var(--text-secondary);
-            margin-bottom: 4px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
         }
 
         .company {
             font-weight: 500;
-            font-size: 15px;
-            color: var(--accent);
-            margin-bottom: 20px;
+            font-size: 13px;
+            color: var(--text-secondary);
+            letter-spacing: 0.4px;
+            margin-bottom: 16px;
         }
 
         .divider {
-            width: 60px;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, var(--accent), transparent);
-            margin: 0 auto 20px;
+            width: 90px;
+            height: 1.5px;
+            background: var(--split);
+            margin: 0 auto 18px;
+            border-radius: 2px;
         }
 
         .tagline {
             font-family: 'Orbitron', sans-serif;
             font-weight: 500;
-            font-size: 11px;
-            color: var(--accent);
-            letter-spacing: 2px;
+            font-size: 12px;
+            letter-spacing: 2.5px;
             text-transform: uppercase;
-            margin-bottom: 16px;
+            margin-bottom: 14px;
+            background: var(--split);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: var(--heat); /* fallback where background-clip:text is unsupported */
         }
 
         .bio {
-            font-size: 14px;
-            line-height: 1.6;
+            font-size: 13.5px;
+            line-height: 1.65;
             color: var(--text-secondary);
             font-weight: 300;
-            margin-bottom: 28px;
-            padding: 0 8px;
+            margin-bottom: 26px;
+            padding: 0 6px;
         }
+
+        .bio .area { color: var(--text-muted); font-size: 12.5px; }
 
         .contact-links {
             display: flex;
             flex-direction: column;
             gap: 12px;
-            margin-bottom: 28px;
+            margin-bottom: 22px;
         }
 
         .contact-link {
             display: flex;
             align-items: center;
             gap: 12px;
-            padding: 10px 16px;
-            background: rgba(var(--accent-rgb), 0.06);
-            border: 1px solid rgba(var(--accent-rgb), 0.1);
+            padding: 11px 16px;
             border-radius: 8px;
             color: var(--text-primary);
             text-decoration: none;
@@ -169,27 +170,58 @@
             transition: all 0.2s ease;
         }
 
-        .contact-link:hover {
-            background: rgba(var(--accent-rgb), 0.12);
-            border-color: rgba(var(--accent-rgb), 0.25);
+        .contact-link svg { width: 18px; height: 18px; flex-shrink: 0; }
+        .contact-link span { color: var(--text-secondary); }
+
+        /* Phone runs warm, email runs cool - the split carried into the rows */
+        .contact-link.heat {
+            background: rgba(var(--heat-rgb), 0.07);
+            border: 1px solid rgba(var(--heat-rgb), 0.16);
+        }
+        .contact-link.heat svg { fill: var(--heat); }
+        .contact-link.heat:hover {
+            background: rgba(var(--heat-rgb), 0.14);
+            border-color: rgba(var(--heat-rgb), 0.32);
         }
 
-        .contact-link svg {
-            width: 18px;
-            height: 18px;
-            flex-shrink: 0;
-            fill: var(--accent);
+        .contact-link.cool {
+            background: rgba(var(--cool-rgb), 0.07);
+            border: 1px solid rgba(var(--cool-rgb), 0.16);
+        }
+        .contact-link.cool svg { fill: var(--cool); }
+        .contact-link.cool:hover {
+            background: rgba(var(--cool-rgb), 0.14);
+            border-color: rgba(var(--cool-rgb), 0.32);
         }
 
-        .contact-link span {
-            color: var(--text-secondary);
-        }
-
-        .btn-row {
+        .social {
             display: flex;
-            gap: 10px;
+            justify-content: center;
+            gap: 12px;
             margin-bottom: 24px;
         }
+
+        .social a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 46px;
+            height: 46px;
+            border-radius: 12px;
+            background: rgba(var(--cool-rgb), 0.07);
+            border: 1px solid rgba(var(--cool-rgb), 0.14);
+            transition: all 0.2s ease;
+        }
+
+        .social a:hover {
+            background: rgba(var(--cool-rgb), 0.16);
+            transform: translateY(-2px);
+        }
+
+        .social svg { width: 21px; height: 21px; fill: var(--text-secondary); }
+        .social a:hover svg { fill: var(--cool); }
+
+        .btn-row { display: flex; gap: 10px; margin-bottom: 22px; }
 
         .save-btn, .qr-btn {
             display: inline-flex;
@@ -209,38 +241,40 @@
 
         .save-btn {
             flex: 1;
-            background: var(--accent);
-            color: var(--text-primary);
+            background: var(--split);
+            color: #FFFFFF;
+            text-decoration: none;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
         }
 
         .save-btn:hover {
-            filter: brightness(0.85);
+            filter: brightness(1.1);
             transform: translateY(-1px);
-            box-shadow: 0 4px 20px rgba(var(--accent-rgb), 0.3);
+            box-shadow: 0 4px 22px rgba(var(--heat-rgb), 0.22), 0 4px 22px rgba(var(--cool-rgb), 0.22);
         }
 
         .qr-btn {
-            background: rgba(var(--accent-rgb), 0.1);
-            color: var(--accent);
-            border: 1px solid rgba(var(--accent-rgb), 0.2);
+            background: rgba(255, 255, 255, 0.06);
+            color: var(--text-secondary);
+            border: 1px solid rgba(255, 255, 255, 0.14);
             padding: 14px 18px;
         }
 
         .qr-btn:hover {
-            background: rgba(var(--accent-rgb), 0.18);
+            background: rgba(255, 255, 255, 0.12);
+            color: #FFFFFF;
             transform: translateY(-1px);
         }
 
         .save-btn:active, .qr-btn:active { transform: translateY(0); }
-        .save-btn svg { width: 18px; height: 18px; fill: var(--text-primary); }
-        .qr-btn svg { width: 18px; height: 18px; fill: var(--accent); }
+        .save-btn svg { width: 18px; height: 18px; fill: #FFFFFF; }
+        .qr-btn svg { width: 18px; height: 18px; fill: currentColor; }
 
-        /* QR Code overlay */
         .qr-overlay {
             display: none;
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0, 0, 0, 0.85);
+            background: rgba(0, 0, 0, 0.88);
             z-index: 100;
             align-items: center;
             justify-content: center;
@@ -251,7 +285,7 @@
 
         .qr-modal {
             background: var(--bg);
-            border: 1px solid rgba(var(--accent-rgb), 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.12);
             border-radius: 16px;
             padding: 32px;
             text-align: center;
@@ -261,18 +295,21 @@
 
         .qr-modal h3 {
             font-family: 'Orbitron', sans-serif;
-            font-size: 14px;
-            color: var(--accent);
-            letter-spacing: 1px;
+            font-size: 13px;
+            letter-spacing: 1.5px;
             margin-bottom: 8px;
+            background: var(--split);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: var(--heat);
         }
 
         .qr-modal p { font-size: 12px; color: var(--text-muted); margin-bottom: 20px; }
-        .qr-modal svg { width: 200px; height: 200px; margin: 0 auto 20px; display: block; }
 
         .qr-close {
             background: none;
-            border: 1px solid rgba(var(--accent-rgb), 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.16);
             color: var(--text-secondary);
             padding: 10px 24px;
             border-radius: 8px;
@@ -282,14 +319,15 @@
             transition: all 0.2s ease;
         }
 
-        .qr-close:hover { border-color: var(--accent); color: var(--text-primary); }
+        .qr-close:hover { border-color: var(--cool); color: #FFFFFF; }
 
         .footer { font-size: 11px; color: var(--text-muted); }
+        .footer a { color: var(--cool); text-decoration: none; }
 
         @media (max-width: 480px) {
             .card { padding: 32px 24px; }
-            .name { font-size: 20px; }
-            .tagline { font-size: 10px; }
+            .name { font-size: 18px; letter-spacing: 1px; }
+            .tagline { font-size: 11px; letter-spacing: 2px; }
             .btn-row { flex-direction: column; }
         }
     </style>
@@ -297,127 +335,66 @@
 <body>
     <div class="card">
         <div class="logo">
-            <img src="logo.svg" alt="{{COMPANY_NAME}}">
+            <img src="logo.jpg" alt="Maldonado Heating &amp; Cooling">
         </div>
 
-        <div class="name">{{PERSON_FULL_NAME}}</div>
-        <div class="title">{{PERSON_TITLE}}</div>
-        <div class="company">{{COMPANY_NAME}}</div>
+        <div class="name">Carlos Maldonado</div>
+        <div class="company">Maldonado Heating &amp; Cooling</div>
 
         <div class="divider"></div>
 
-        <div class="tagline">{{COMPANY_TAGLINE}}</div>
+        <div class="tagline">Two Seasons. One Standard.</div>
 
-        <div class="bio">{{COMPANY_DESCRIPTOR}}</div>
+        <div class="bio">
+            Heating &bull; Cooling &bull; Installation &bull; Repair<br>
+            <span class="area">Kansas City Metro</span>
+        </div>
 
         <div class="contact-links">
-            <a href="tel:{{PERSON_PHONE_E164}}" class="contact-link">
+            <a href="tel:+19139635392" class="contact-link heat">
                 <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
-                <span>{{PERSON_PHONE_DISPLAY}}</span>
+                <span>(913) 963-5392</span>
             </a>
-            <!-- OFFICE_PHONE_START -->
-            <a href="tel:{{COMPANY_OFFICE_PHONE_E164}}" class="contact-link">
-                <svg viewBox="0 0 24 24"><path d="M12 7V3H2v18h20V7H12zm-2 12H4v-2h6v2zm0-4H4v-2h6v2zm0-4H4V9h6v2zm0-4H4V5h6v2zm10 12h-8v-2h2v-2h-2v-2h2v-2h-2V9h8v10zm-2-8h-2v2h2v-2zm0 4h-2v2h2v-2z"/></svg>
-                <span>{{COMPANY_OFFICE_PHONE_DISPLAY}}</span>
-            </a>
-            <!-- OFFICE_PHONE_END -->
-
-            <a href="mailto:{{PERSON_EMAIL}}" class="contact-link">
+            <a href="mailto:maldonadolarios1987@gmail.com" class="contact-link cool">
                 <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
-                <span>{{PERSON_EMAIL}}</span>
+                <span>maldonadolarios1987@gmail.com</span>
             </a>
+        </div>
 
-            <!-- WEBSITE_START -->
-            <a href="{{COMPANY_WEBSITE_URL}}" target="_blank" rel="noopener" class="contact-link">
-                <svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zm6.93 6h-2.95a15.65 15.65 0 00-1.38-3.56A8.03 8.03 0 0118.92 8zM12 4.04c.83 1.2 1.48 2.53 1.91 3.96h-3.82c.43-1.43 1.08-2.76 1.91-3.96zM4.26 14C4.1 13.36 4 12.69 4 12s.1-1.36.26-2h3.38c-.08.66-.14 1.32-.14 2s.06 1.34.14 2H4.26zm.82 2h2.95c.32 1.25.78 2.45 1.38 3.56A7.987 7.987 0 015.08 16zm2.95-8H5.08a7.987 7.987 0 014.33-3.56A15.65 15.65 0 008.03 8zM12 19.96c-.83-1.2-1.48-2.53-1.91-3.96h3.82c-.43 1.43-1.08 2.76-1.91 3.96zM14.34 14H9.66c-.09-.66-.16-1.32-.16-2s.07-1.35.16-2h4.68c.09.65.16 1.32.16 2s-.07 1.34-.16 2zm.25 5.56c.6-1.11 1.06-2.31 1.38-3.56h2.95a8.03 8.03 0 01-4.33 3.56zM16.36 14c.08-.66.14-1.32.14-2s-.06-1.34-.14-2h3.38c.16.64.26 1.31.26 2s-.1 1.36-.26 2h-3.38z"/></svg>
-                <span>{{COMPANY_WEBSITE_DISPLAY}}</span>
+        <div class="social">
+            <a href="https://facebook.com/juancarlos.maldonadolarios" target="_blank" rel="noopener" aria-label="Facebook">
+                <svg viewBox="0 0 24 24"><path d="M24 12.07C24 5.4 18.63 0 12 0S0 5.4 0 12.07C0 18.1 4.39 23.1 10.13 24v-8.44H7.08v-3.49h3.05V9.41c0-3.02 1.79-4.69 4.53-4.69 1.31 0 2.68.24 2.68.24v2.97h-1.51c-1.49 0-1.96.93-1.96 1.89v2.25h3.33l-.53 3.49h-2.8V24C19.61 23.1 24 18.1 24 12.07z"/></svg>
             </a>
-            <!-- WEBSITE_END -->
-            <!-- OFFICE_ADDRESS_START -->
-            <a href="{{COMPANY_OFFICE_ADDR_MAPS_URL}}" target="_blank" rel="noopener" class="contact-link">
-                <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
-                <span>{{COMPANY_OFFICE_ADDR}}</span>
-            </a>
-            <!-- OFFICE_ADDRESS_END -->
-            <!-- BOOKING_LINK_START -->
-            <a href="{{PERSON_BOOKING_URL}}" target="_blank" rel="noopener" class="contact-link">
-                <svg viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>
-                <span>Book a meeting</span>
-            </a>
-            <!-- BOOKING_LINK_END -->
         </div>
 
         <div class="btn-row">
-            <button class="save-btn" onclick="saveContact()">
+            <a class="save-btn" href="contact.vcf">
                 <svg viewBox="0 0 24 24"><path d="M19 12v7H5v-7H3v7c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-7h-2zm-6 .67l2.59-2.58L17 11.5l-5 5-5-5 1.41-1.41L11 12.67V3h2v9.67z"/></svg>
                 Save Contact
-            </button>
+            </a>
             <button class="qr-btn" onclick="toggleQR()">
                 <svg viewBox="0 0 24 24"><path d="M3 11h8V3H3v8zm2-6h4v4H5V5zm8-2v8h8V3h-8zm6 6h-4V5h4v4zM3 21h8v-8H3v8zm2-6h4v4H5v-4zm13-2h-2v3h-3v2h3v3h2v-3h3v-2h-3v-3zm-3 8v-2h-2v2h2zm4 0v-2h-2v2h2z"/></svg>
                 QR
             </button>
         </div>
 
-        <div class="footer">Powered by <a href="https://www.sharkitectdigital.com" target="_blank" rel="noopener" style="color:#29ABE2;text-decoration:none;">Sharkitect</a></div>
+        <div class="footer">Powered by <a href="https://www.sharkitectdigital.com" target="_blank" rel="noopener">Sharkitect</a></div>
     </div>
 
     <!-- QR Code Overlay -->
     <div class="qr-overlay" id="qrOverlay" onclick="toggleQR()">
         <div class="qr-modal" onclick="event.stopPropagation()">
-            <h3>SCAN TO CONNECT</h3>
+            <h3>SCAN TO SAVE</h3>
             <p>Point your camera at the code</p>
-            <img src="qr-code.svg" alt="QR code" style="width:220px;height:220px;display:block;margin:0 auto 20px;border-radius:8px;"/>
+            <img src="qr-code.svg" alt="QR code to save Carlos Maldonado's contact" style="width:220px;height:220px;display:block;margin:0 auto 20px;border-radius:8px;"/>
             <button class="qr-close" onclick="toggleQR()">Close</button>
         </div>
     </div>
 
     <script>
-        function saveContact() {
-            const _officePhone = `{{COMPANY_OFFICE_PHONE_DISPLAY}}`;
-            const _photoB64 = `{{PERSON_PHOTO_B64}}`;  // optional headshot JPEG, base64 only (no data: prefix). Empty string omits vCard PHOTO.
-            const _officeAddr = `{{COMPANY_OFFICE_ADDR}}`;
-            const _website = `{{COMPANY_WEBSITE_URL}}`;
-            const _tagline = `{{COMPANY_TAGLINE}}`;
-            const _bio = `{{COMPANY_DESCRIPTOR}}`;
-            const _ap = _officeAddr ? _officeAddr.split(',').map(s => s.trim()) : [];
-            const _adrLine = _officeAddr
-                ? `ADR;TYPE=WORK:;;${_ap[0] || ''};${_ap[1] || ''};${_ap[2] || ''};${_ap[3] || ''};USA`
-                : '';
-            const _noteStr = [_tagline, _bio].filter(Boolean).join(' | ');
-
-            const vcard = [
-                `BEGIN:VCARD`,
-                `VERSION:3.0`,
-                `N:{{PERSON_LAST_NAME}};{{PERSON_FIRST_NAME}};;;`,
-                `FN:{{PERSON_FULL_NAME}}`,
-                `ORG:{{COMPANY_NAME}}`,
-                `TITLE:{{PERSON_TITLE}}`,
-                `TEL;TYPE=CELL:{{PERSON_PHONE_DISPLAY}}`,
-                _officePhone ? `TEL;TYPE=WORK:${_officePhone}` : '',
-                `EMAIL;TYPE=WORK:{{PERSON_EMAIL}}`,
-                _website ? `URL:${_website}` : '',
-                _adrLine,
-                _noteStr ? `NOTE:${_noteStr}` : '',
-                _photoB64 ? `PHOTO;ENCODING=b;TYPE=JPEG:${_photoB64}` : '',
-                `END:VCARD`
-            ].filter(Boolean).join('\r\n');
-
-            const blob = new Blob([vcard], { type: 'text/vcard;charset=utf-8' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = '{{PERSON_FULL_NAME_DASH}}.vcf';
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-        }
-
         function toggleQR() {
             document.getElementById('qrOverlay').classList.toggle('active');
         }
-
-        function generateQR() { /* replaced by direct img tag */ }
-        </script>
+    </script>
 </body>
 </html>
